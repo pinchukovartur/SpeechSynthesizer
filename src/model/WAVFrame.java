@@ -10,6 +10,7 @@ public class WAVFrame {
     private byte[] data;
     private int entropy;
     private double[] fourierSeries;
+    private double [] fourierWithHamming;
 
     public WAVFrame(int number, int startIndex, int endIndex, byte[] data)
     {
@@ -19,6 +20,7 @@ public class WAVFrame {
         this.data = data;
         this.entropy = GetEntropy(data);
         this.fourierSeries = GetFourierSeries(data);
+        this.fourierWithHamming = GetHammingFunction(fourierSeries);
     }
 
     private int GetEntropy(byte[] data){
@@ -26,6 +28,15 @@ public class WAVFrame {
         for (int i = 0; i < data.length; i++) {
 
             result += data[i] * Math.log(data[i]);
+        }
+        return result;
+    }
+
+    private double [] GetHammingFunction(double [] data){
+        double [] result = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            double hammingNumber = 0.54 - 0.46 * Math.cos(2 * 3.14 * i / (data.length - 1));
+            result[i] = data[i] * hammingNumber;
         }
         return result;
     }

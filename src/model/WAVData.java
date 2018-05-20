@@ -24,6 +24,10 @@ public class WAVData {
     private byte[] data;
     private List<WAVFrame> frems;
 
+    public List<WAVFrame> GetFrames(){
+        return frems;
+    }
+
 
     public WAVData(byte[] wavData) {
         chunkID = WAVData.CreateString(wavData, new int[]{0, 1, 2, 3});
