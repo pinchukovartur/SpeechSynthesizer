@@ -1,9 +1,12 @@
+package model;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WAVData {
+
     private String chunkID;
     private int chunkSize;
     private String format;
@@ -19,7 +22,7 @@ public class WAVData {
     private int subChunk2Size;
 
     private byte[] data;
-    private List<byte[]> frems;
+    private List<WAVFrame> frems;
 
 
     public WAVData(byte[] wavData) {
@@ -36,9 +39,11 @@ public class WAVData {
         bitsPerSample = WAVData.CreateString(wavData, new int[]{34, 35}); // не инт
         subChunk2ID = WAVData.CreateString(wavData, new int[]{36, 37, 38, 39});
         subChunk2Size = WAVData.CreateInt(wavData, new int[]{40, 41, 42, 43}, true);
-        data = WAVData.CreateWavData(wavData, 44);
+        data = CreateWavData(wavData, 44);
 
+        frems = CreateFrames(data, 10, 5);
 
+        System.out.println(frems.size());
     }
 
     private static String CreateString(byte[] data, int[] numbers) {
@@ -60,7 +65,7 @@ public class WAVData {
         return bb.getInt();
     }
 
-    public static byte[] CreateWavData(byte[] data, int startIndex) {
+    private byte[] CreateWavData(byte[] data, int startIndex) {
         byte[] result = new byte[data.length - startIndex];
 
         for (int i = 0; i < result.length; i++) {
@@ -69,19 +74,22 @@ public class WAVData {
         return result;
     }
 
-    public static List<byte[]> CreateFrems(byte[] data, int freamSize, int fremNah) {
-        List<byte[]> result = new ArrayList<>();
+    private List<WAVFrame> CreateFrames(byte[] data, int frameSize, int frameOverlapping) {
 
-        byte[] frem = new byte[freamSize];
+        List<WAVFrame> result = new ArrayList<>();
 
-        int startIndex = 0;
-        int endIndex = freamSize;
+        int start = 0;
+        int end = frameSize;
+        int nextIndex = 0;
         for (int i = 0; i < data.length; i++)
         {
-            byte[] item = WAVData.GetBytesInInterval(data, startIndex, endIndex);
-            startIndex = 0;
-            endIndex = 0;
-
+            if (nextIndex == i){
+                WAVFrame newFrame = new WAVFrame(result.size() + 1, start, end, GetBytesInInterval(data, start, end));
+                start = end - frameOverlapping;
+                end = end + frameSize - frameOverlapping;
+                nextIndex = nextIndex + frameSize - frameOverlapping;
+                result.add(newFrame);
+            }
         }
 
 
@@ -89,11 +97,16 @@ public class WAVData {
     }
 
 
-    public static byte[] GetBytesInInterval(byte[] data, int startIndex, int endIndex) {
+    private byte[] GetBytesInInterval(byte[] data, int startIndex, int endIndex) {
+
+        if (data.length < endIndex){
+            endIndex = data.length;
+        }
+
         byte[] result = new byte[endIndex - startIndex];
         for (int i = 0; i < data.length; i++) {
             result[i] = data[startIndex + i];
-            if (i + startIndex >= endIndex)
+            if (i + startIndex >= endIndex - 1)
                 break;
         }
         return result;

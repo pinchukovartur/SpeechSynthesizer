@@ -1,3 +1,5 @@
+package controller;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -6,22 +8,27 @@ import java.util.List;
 
 public class PlaySound {
 
-    private final String LOCAL = "WAVs//";
+    /*
+       Метод проигрывает фонемы
+    */
+    public void playSound(List<String> phonemes) throws InterruptedException {
+        for (String phoneme : phonemes) {
 
-
-    public void playSound(List<String> fonems) throws InterruptedException {
-        for (int i = 0; i < fonems.size(); i++) {
-            if(fonems.get(i).equals(" ")){
+            if (phoneme.equals(" ")) {
+                // задержка между пробелами
                 Thread.sleep(300);
                 continue;
             }
+
             try {
-                File soundFile = new File(LOCAL+fonems.get(i)+".wav");
+                String LOCAL = "WAVs//";
+
+                File soundFile = new File(LOCAL + phoneme + ".wav");
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
                 clip.start();
-                Thread.sleep(clip.getMicrosecondLength()/1000);
+                Thread.sleep(clip.getMicrosecondLength() / 1000);
                 clip.flush();
             } catch (Exception e) {
                 e.printStackTrace();

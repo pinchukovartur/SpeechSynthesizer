@@ -1,4 +1,6 @@
+package controller;
 
+import model.WAVData;
 
 import java.io.IOException;
 import java.nio.file.Files;

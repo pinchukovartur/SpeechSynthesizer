@@ -1,17 +1,21 @@
+package controller;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class ParsString {
+public class ParsString {
 
-    ParsString() {
+    public ParsString() {
     }
 
-
-    public List<String> getFonems(String baseString) {
+    /*
+    * Метод разбивает строку на фонемы
+    * */
+    public List<String> getPhoneme(String baseString) {
 
         String nBaseString = " " + baseString.toLowerCase()+" ";
 
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < nBaseString.length(); i++) {
             String elem = Character.toString(nBaseString.charAt(i));
             if(elem.equals("ь") || elem.equals("ъ")){
@@ -51,7 +55,7 @@ class ParsString {
                         } else {
                             result.add(elem);
                         }
-                    } catch (Exception ex) {
+                    } catch (Exception ignored) {
                     }
                 } else {
                     try {
@@ -118,7 +122,7 @@ class ParsString {
                                 result.add(elem);
                             }
                         }
-                    } catch (Exception ex) {
+                    } catch (Exception ignored) {
                     }
                 }
             }
@@ -133,11 +137,9 @@ class ParsString {
             System.err.println("consonant length > 1");
             return false;
         }
-        if (consonant.equals("у") || consonant.equals("е") || consonant.equals("ы") || consonant.equals("а") ||
+        return consonant.equals("у") || consonant.equals("е") || consonant.equals("ы") || consonant.equals("а") ||
                 consonant.equals("о") || consonant.equals("э") || consonant.equals("я") || consonant.equals("и")
-                || consonant.equals("ю") || consonant.equals("ё")) {
-            return true;
-        } else return false;
+                || consonant.equals("ю") || consonant.equals("ё");
     }
 
     private boolean checkSoft(String consonant) {
@@ -145,10 +147,8 @@ class ParsString {
             System.err.println("consonant length > 1");
             return false;
         }
-        if (consonant.equals("е") || consonant.equals("я") || consonant.equals("и")
-                || consonant.equals("ю") || consonant.equals("ё") || consonant.equals("ь")) {
-            return true;
-        } else return false;
+        return consonant.equals("е") || consonant.equals("я") || consonant.equals("и")
+                || consonant.equals("ю") || consonant.equals("ё") || consonant.equals("ь");
     }
 
     private boolean checkIotovaia(String consonant) {
@@ -156,9 +156,7 @@ class ParsString {
             System.err.println("consonant length > 1");
             return false;
         }
-        if (consonant.equals("е") || consonant.equals("я")
-                || consonant.equals("ю") || consonant.equals("ё") || consonant.equals("и")) {
-            return true;
-        } else return false;
+        return consonant.equals("е") || consonant.equals("я")
+                || consonant.equals("ю") || consonant.equals("ё") || consonant.equals("и");
     }
 }

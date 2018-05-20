@@ -1,14 +1,20 @@
+package view;
+
+import controller.ParsString;
+import controller.PlaySound;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+
 public class MainWindow {
 
-    MainWindow() {
+    public MainWindow() {
         JFrame mainFrame = new JFrame();
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         final PlaySound playSound = new PlaySound();
         mainFrame.setLayout(new GridBagLayout());
         mainFrame.setSize(new Dimension(600, 200));
@@ -38,11 +44,11 @@ public class MainWindow {
 
                 ParsString parsString = new ParsString();
 
-                List<String> result = parsString.getFonems(prs);
+                List<String> result = parsString.getPhoneme(prs);
                 String res = "";
 
                 for (int i = 0; i < result.size(); i++) {
-                    res=res+result.get(i);
+                    res = res + result.get(i);
                     System.out.println(result.get(i));
                 }
                 jLabelFirst.setText(res);
