@@ -1,4 +1,4 @@
-package controller.Math;
+package STT.Math;
 
 
 import static java.lang.Math.floor;

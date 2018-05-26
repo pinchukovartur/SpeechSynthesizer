@@ -1,4 +1,4 @@
-package controller;
+package STT.Math;
 
 
 import javax.sound.sampled.*;

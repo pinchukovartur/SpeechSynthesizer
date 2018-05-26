@@ -1,6 +1,4 @@
-package model;
-
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+package STT.Math.model;
 
 public class WAVFrame {
 

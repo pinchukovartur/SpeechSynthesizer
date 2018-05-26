@@ -1,6 +1,6 @@
-package controller;
+package STT.Math;
 
-import model.WAVData;
+import STT.Math.model.WAVData;
 
 import java.io.IOException;
 import java.nio.file.Files;

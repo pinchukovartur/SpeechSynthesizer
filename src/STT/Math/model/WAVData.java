@@ -1,4 +1,4 @@
-package model;
+package STT.Math.model;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
