@@ -14,6 +14,8 @@ public class UserInterface {
 
     private JButton m_stopPlayButton;
 
+    private JButton m_startDecodeSoundButton;
+
     /**
      * Лейбел на окне интерфейса
      */
@@ -29,7 +31,7 @@ public class UserInterface {
      * @param stopButtonName текст на кнопке stop
      * @param labelText      текст на лейбле
      */
-    public UserInterface(int windowWidth, int windowHeight, String runButtonName, String stopButtonName, String labelText) {
+    public UserInterface(int windowWidth, int windowHeight, String runButtonName, String stopButtonName, String decodeButtonName, String labelText) {
 
         // настройки окна
         JFrame window = new JFrame();
@@ -40,9 +42,11 @@ public class UserInterface {
         m_runPlayButton = new JButton(runButtonName);
         m_logLabel = new JLabel(labelText);
         m_stopPlayButton = new JButton(stopButtonName);
+        m_startDecodeSoundButton = new JButton(decodeButtonName);
 
         window.add(m_runPlayButton);
         window.add(m_stopPlayButton);
+        window.add(m_startDecodeSoundButton);
         window.add(m_logLabel);
 
         window.setVisible(true);
@@ -57,6 +61,10 @@ public class UserInterface {
                 1, 1, 1, 1), 0, 0));
 
         window.add(m_stopPlayButton, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+                GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(
+                1, 1, 1, 1), 0, 0));
+
+        window.add(m_startDecodeSoundButton, new GridBagConstraints(0, 3, 1, 1, 0, 0,
                 GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(
                 1, 1, 1, 1), 0, 0));
     }
@@ -83,6 +91,13 @@ public class UserInterface {
             return;
 
         m_stopPlayButton.addActionListener(action);
+    }
+
+    public void addActionOnDecodeButton(ActionListener action) {
+        if (action == null)
+            return;
+
+        m_startDecodeSoundButton.addActionListener(action);
     }
 
     /**

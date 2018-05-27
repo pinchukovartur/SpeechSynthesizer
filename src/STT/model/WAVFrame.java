@@ -1,4 +1,4 @@
-package STT.Math.model;
+package STT.model;
 
 public class WAVFrame {
 

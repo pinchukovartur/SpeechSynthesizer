@@ -1,5 +1,6 @@
 package STT;
 
+import STT.controller.WAVController;
 import STT.controller.WriteSoundThread;
 import STT.view.UserInterface;
 
@@ -10,11 +11,12 @@ public class Runner {
 
     public static void main(String[] args) {
         // создаем окно интерфейса
-        UserInterface window = new UserInterface(200, 150, "Run", "Stop", "LogText");
+        UserInterface window = new UserInterface(200, 150,
+                "Run", "Stop", "Decode", "LogText");
         // создаем поток для аудио записи
-        File outputFile = new File("P:\\Projects\\SpeechSynthesizer\\test.wav");
-        AudioFormat audioFormat = new AudioFormat(
-                AudioFormat.Encoding.PCM_SIGNED,
+        String saveTextPatch = "P:\\Projects\\SpeechSynthesizer\\test.wav";
+        File outputFile = new File(saveTextPatch);
+        AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
                 44100.0F, 16, 2, 4, 44100.0F, false);
         DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
         TargetDataLine targetDataLine = null;
@@ -39,6 +41,8 @@ public class Runner {
             soundThread.stopRecording();
             window.setLogText("Recording stopped.");
         });
+
+        window.addActionOnDecodeButton(e -> window.setLogText(WAVController.ParseFile(saveTextPatch)));
     }
 
 }
